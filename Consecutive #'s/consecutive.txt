@@ -1,0 +1,196 @@
+/**********************************************************************************************************************/
+												   	Overview
+/**********************************************************************************************************************/
+In this section we are going to look at three versions of a program. These programs are designed to get an integer value
+from the user and then add that number consecutively (i.e. User enters in 5 the program adds 5 + 4 + 3 + 2 + 1). While
+there is always more than one way to solve a problem, some solutions are the most optimal. Using these three files we will
+be better able to understand why/when to use different methods such as conditionals, loops, or recursive functions.
+
+First let's go over the algorthims used in each file to understand what they are doing:
+
+
+
+/**********************************************************************************************************************/
+												consecutive1.c
+/**********************************************************************************************************************/ 
+
+
+     if(number % 2 == 0){
+         total = (number + 1) * ((number + 1) / 2);
+     } else {
+         total = number * ((number + 1) / 2);
+     }
+
+In consecutive1.c an if statement is used to check whether the input value is odd or even. It does this by using the 
+modulus (%). This simply divides the number by two and looks to see if there is a remainder. Even numbers are perfectly
+divisible by two and have no remainder whereas odd numbers will always have a remainder of 1. So an easy way to read this 
+is: If the number divided by 2 has no remainder the number is even so execute the code in the if statement. If the number
+has a remainder of 1 it is odd so execute the code in the else statement. 
+
+												***EVEN Numbers***
+
+The formula to find the solution is: n + 1 * n + 1 / 2. To ensure the correct order of operations we wrap the formula
+in parenthesis like this: (n +1) * ((n + 1) / 2). Let's do this formula by hand:
+
+Value = 6
+
+(6 + 1) * ((6 + 1) / 2) => 7 * ( 7 / 2) => 7 * 3.5 = 24.5
+
+Now you should be thinking: Wait I'm adding whole numbers why is there a decimal in my answer? Well, let's add it up:
+
+7 + 6 + 5 + 4 + 3 + 2 + 1 = 21
+
+Your first thought may be that the formula we are using is wrong, however we have to take into consideration how a 
+computer processes the information. In the start of the program we initialized the total variable to an integer. 
+Which means that the computer will still do the calculation 7 / 2 and arrive at the same answer 3.5 . However we 
+are using integers. Because integers cannot have decimal values the computer truncates or "drops" the decimal. So 
+we end up with 7 / 2 = 3. And 7 * 3 is 21 which is the answer we got when adding the numbers by hand. There are times
+in which you want this kind of behavior in your program. Just be sure you understand why it is doing it and you won't
+be surprised by one of your programs later.
+
+												***ODD Numbers***
+
+The formula for odd numbers is: n * n + 1 / 2. Again we want to wrap the equation in parenthesis to ensure the correct
+order of operations: n * ((n + 1) / 2). Again, let's do this by hand:
+
+Value = 7
+
+7 * ((7 + 1) / 2) => 7 * (8 / 2) => 7 * 4 = 28
+
+We know from our previous example that 6 consecutive is 21. Therefore 21 + 7 = 28. With this formula we don't have to 
+worry about truncating any decimal values.
+
+
+/**********************************************************************************************************************/
+												consecutive2.c
+/**********************************************************************************************************************/
+
+In consecutive2.c a while statement is used to find the solution. We can see from the file that n, i , and sum were declared
+as integer values. Sum and i were instantiated with the values 0 and 1 respectively. 
+ 
+    while(i <= n){
+        sum += i;
+        ++i;
+    } 
+ 
+/**********************************************************************************************************************/
+												consecutive3.c
+/**********************************************************************************************************************/
+
+Here instead of using a while loop we accomplish the same thing with a for loop. 
+
+    for(i = 1; i <= n; ++i){
+        sum += i;
+    }
+ 
+/**********************************************************************************************************************/
+											Testing Execution Times
+/**********************************************************************************************************************/
+ 
+Go ahead and compile each program. run each program with the following values (625, 48, 1209) and compare the 
+execution speeds of each program. Which program executed fastest? Which program executed slowest? Did the size
+of the number dictate the execution speed of the 3 programs? The table below shows my results from the tests.
+  
+---------------------------------------------
+Program          | Value   | Execution Time |
+---------------------------------------------
+consecutive1.c   | 625     | .000001
+---------------------------------------------
+consecutive1.c   | 48      | .000002
+---------------------------------------------
+consecutive1.c   | 1209    | .000002
+---------------------------------------------
+consecutive2.c   | 625     | .000003
+---------------------------------------------
+consecutive2.c   | 48      | .000002
+---------------------------------------------
+consecutive2.c   | 1209    | .000004
+---------------------------------------------
+consecutive3.c   | 625     | .000003
+---------------------------------------------
+consecutive3.c   | 48      | .000002
+---------------------------------------------
+consecutive3.c   | 1209    | .000004
+---------------------------------------------
+
+Did you get similar results? Were the results what you expected? Why or why not?
+
+In almost every test the first program executed about 2x's as fast as the others. The only case that it didn't was 
+when a smaller number like 48 was input. This is because as the number gets smaller the while and for loops are faster.
+For example if you entered in 5 the for and while loops would execute the job in .000001 while the if statement would 
+take .000002. Let's break down why this is.
+
+
+First let's actually add the numbers by hand:
+
+5 + 4 + 3 + 2 + 1 = 15
+
+You could probably do this in your head. And it is a relatively quick process. The while and for loops complete
+the task pretty much just like this. 
+
+Now let's solve it with the formula's:
+
+Is 5 odd or even: odd
+
+5 * ((5+ 1) / 2)
+
+5 * (6 / 2)
+
+5 * 3
+
+15
+
+This method requires a lot of steps and "processing power" on our part just to find the answer. It is also important
+to note that if the number were even we would have to add an extra step.
+
+Okay, so this kind of explains why smaller numbers are faster to execute with while and for loops but, what about large
+numbers.
+
+Let's say the number is 999:
+
+999 + 998 + 997 +996 .... = 499500
+
+You would have to add almost 1000 numbers by hand to find the answer. If you were doing this by hand that would take a 
+very long time not to mention the chances of making a mistake are really high. What about the other way?
+
+Is 999 odd or even: odd
+
+999 * ((999 + 1) / 2)
+
+999 * (1000 / 2)
+
+999 * 500
+
+499500
+
+We are able to solve this problem in about 4-5 steps. Not only is this way a lot faster it is less error prone (if doing
+it by hand).
+
+While computers are extremely fast at solving problems (and generally less error prone) it is important as developers that 
+we find the most efficient solution to these problems. This might seem like a trivial thing but imagine this small program 
+working in a much larger program. If none of the algorithms were as efficient as possible the overall execution speed of 
+the program would diminish.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

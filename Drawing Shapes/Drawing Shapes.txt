@@ -1,1 +1,81 @@
+/*************************************************************************************************/
+These files once compiled will print out the following patterns in the console/terminal window.
+Some of these programs need to be refactored however, at this time they are working. Feel free to 
+modify them so they have an optimal solution.
 
+
+a.c
+
+O O O O O O  O O O O O O
+O O O O O      O O O O O
+O O O O          O O O O
+O O O              O O O  
+O O                  O O 
+O                      O
+
+O                      O
+O O                  O O
+O O O              O O O
+O O O O          O O O O
+O O O O O      O O O O O
+O O O O O O  O O O O O O
+
+
+
+a1.c
+
+O O O O O O O O O O O
+O O O O O   O O O O O
+O O O O       O O O O
+O O O           O O O
+O O               O O
+O                   O
+O O               O O
+O O O           O O O
+O O O O       O O O O
+O O O O O   O O O O O
+O O O O O O O O O O O
+
+a2.c
+
+O O O O O O
+O O O O O
+O O O O
+O O O
+O O
+O
+
+
+a3.c
+
+O
+O O
+O O O
+O O O O
+O O O O O
+O O O O O O
+
+a4.c
+
+     *
+    * *
+   * * *
+  * * * *
+ * * * * *
+* * * * * *
+
+a5.c
+
+                         *
+                    *       *
+               *       *       *
+          *       *       *       *
+     *       *       *       *       *
+*       *       *       *       *       *
+
+*       *       *       *       *       *
+     *       *       *       *       *
+	        *       *       *       *
+		           *       *       *
+			              *       *
+					               *

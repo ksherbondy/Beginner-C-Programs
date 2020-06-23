@@ -1,0 +1,440 @@
+
+
+/*********************************************************************************************************************/
+												Bubble Sorting Array's
+/*********************************************************************************************************************/
+
+
+#include <stdio.h>
+#define  SIZE(x) (sizeof(x)) / (sizeof((x)[0]))
+
+int main() {
+
+    int bubble[] = {95, 60, 6, 86, 50, 24};
+    int inner, outer, temp, x;
+
+    /*Display original array*/
+	
+    puts("Original Array:");
+	
+    for (x = 0; x < SIZE(bubble); x++) {
+       printf("%02d\t", bubble[x]);
+    }
+	
+    putchar('\n');
+	
+    /*Bubble Sort*/
+	
+    for(outer = 0; outer < SIZE(bubble) - 1; outer++){
+        for(inner = outer + 1; inner < SIZE(bubble); inner++){
+            if(bubble[outer] > bubble[inner]){
+
+                temp = bubble[outer];
+                bubble[outer] = bubble[inner];
+                bubble[inner] = temp;
+            }
+        }
+    }
+	
+    /*Display sorted array*/
+	
+    puts("Sorted Array:");
+	
+    for(x = 0; x < SIZE(bubble); x++){
+        printf("%02d\t", bubble[x]);
+    }
+	
+    putchar('\n');
+	
+    return 0;
+}
+
+
+
+
+/*********************************************************************************************************************/
+								Breakdown of Nested For Loop Used to Bubble Sort Array
+/*********************************************************************************************************************/	
+
+
+
+To really understand what is going you need to have a strong grasp on how for and nested for loops work. If not see 
+the Drawing Shapes folder of this repository and come back. I have broken down each iteration of the for loops. Think
+of the headers as 1st iteration of the outer loop followed by the 1st-last iterations of the inner loop. 
+
+1st OL    //Outer Loop
+1st LL    //Inner Loop
+2nd LL
+...
+...
+2nd OL
+1st IL
+...
+  
+  
+  
+  
+-----------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------1st OL--------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+
+outer = 0
+SIZE = 5 
+
+
+---------------------------------------------------1st IL--------------------------------------------------------------
+
+
+The code above shows the if statement like this:
+
+
+if(bubble[outer] > bubble[inner])
+
+
+We could think of the if statement written as:
+
+
+if(bubble[0] > bubble[1])
+
+We get the values of outer and inner from the for loops (the initial value of outer is 0 and inner is equal to outer + 1 or 0 + 1 = 1)
+
+
+With this view we can see that the if statement is trying to determine if the value at index [0] is bigger than
+index[1]. Looking at the values we stored in the bubble array index[0] = 95 and index[1] = 60. You don't really 
+have to be a mathmetician to know which value is bigger. 
+
+The statements inside the if statement can also seem more confusing than they really are. These statments are doing
+the exact same thing as this:
+
+int x, y, z;
+
+x = 1; 
+y = 2; 
+z = x; 
+x = y; 
+y = z;
+
+It just seems overwhelming because we are working with array indexes. We could think of the inner if statements as:
+
+x = bubble[0];
+y = bubble[1];
+z = x;
+x = y;
+y = z;
+
+Now let's see the logic behind it all:
+
+outer = 0
+inner = 1
+SIZE = 6
+
+Before:
+bubble[] = {95, 60, 6, 86, 50, 24};
+            ^   ^
+		Outer   Inner
+		
+95 is larger than 60 so swap them
+
+After:
+bubble[] = {60, 95, 6, 86, 50, 24}
+
+
+---------------------------------------------------2nd IL--------------------------------------------------------------
+
+
+outer = 0
+inner = 2
+SIZE = 6
+
+Before:
+bubble[]{60, 95, 6, 86, 50, 24}
+         ^       ^
+		 Outer   Inner
+		 
+60 is larger than 6 so swap them
+
+After:
+bubble[] {6, 95, 60, 86, 50, 24}
+
+
+---------------------------------------------------3rd IL--------------------------------------------------------------
+
+
+outer = 0
+inner = 3
+SIZE = 6
+
+Before:
+bubble[]{6, 95, 60, 86, 50, 24}
+         ^          ^
+		 Outer      Inner
+		 
+6 is less than 86 so do nothing
+
+After:
+bubble[]{6, 95, 60, 86, 50, 24}
+
+
+---------------------------------------------------4th IL--------------------------------------------------------------
+
+
+outer = 0
+inner = 4
+SIZE = 6
+
+Before:
+bubble[]{6, 95, 60, 86, 50, 24}
+         ^              ^
+		 Outer          Inner
+		 
+6 is less than 50 so do nothing
+
+After:
+bubble[]{6, 95, 60, 86, 50, 24}
+
+
+---------------------------------------------------5th IL--------------------------------------------------------------
+
+
+outer = 0
+inner = 5
+SIZE = 6
+
+Before:
+bubble[]{6, 95, 60, 86, 50, 24}
+         ^                  ^
+		 Outer              Inner
+		 
+6 is less than 24 so do nothing
+
+After:
+bubble[]{6, 95, 60, 86, 50, 24}
+
+We can see after the last iteration of the inner loop that the smallest value is in the index position of [0].
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------2nd OL--------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+
+outer = 1
+
+
+---------------------------------------------------1st IL--------------------------------------------------------------
+
+
+outer = 1
+inner = 2
+SIZE = 6
+
+Before:
+bubble[] {6, 95, 60, 86, 50, 24}
+              ^   ^
+		  Outer   Inner
+		
+95 is larger than 60 so swap them
+
+After:
+bubble[] {6, 60, 95, 86, 50, 24}
+
+---------------------------------------------------2nd IL--------------------------------------------------------------
+
+
+outer = 1
+inner = 3
+SIZE = 6
+
+Before:
+bubble[] {6, 60, 95, 86, 50, 24}
+             ^       ^
+		     Outer   Inner
+		 
+60 is less than 86 so do nothing
+
+After:
+bubble[] {6, 60, 95, 86, 50, 24}
+
+
+---------------------------------------------------3rd IL--------------------------------------------------------------
+
+
+outer = 1
+inner = 4
+SIZE = 6
+
+Before:
+bubble[] {6, 60, 95, 86, 50, 24}
+             ^           ^
+		     Outer      Inner
+		 
+60 is larger than 50 so swap them
+
+After:
+bubble[] {6, 50, 95, 86, 60, 24}
+
+
+---------------------------------------------------4th IL--------------------------------------------------------------
+
+
+outer = 1
+inner = 5
+SIZE = 6
+
+Before:
+bubble[] {6, 50, 95, 86, 60, 24}
+              ^              ^
+		      Outer          Inner
+		 
+50 is larger than 24 so swap them
+
+After:
+bubble[] {6, 24, 95, 86, 60, 50}
+
+We can see after teh last iteration of the inner loop that the second smallest value is in the index position of [1].
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------3rd OL--------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+
+outer = 2
+
+
+---------------------------------------------------1st IL--------------------------------------------------------------
+
+
+outer = 2
+inner = 3
+SIZE = 6
+
+Before:
+bubble[] {6, 24, 95, 86, 60, 50}
+                 ^   ^
+		     Outer   Inner
+		
+95 is larger than 86 so swap them
+
+After:
+bubble[] {6, 24, 86, 95, 60, 50}
+
+
+---------------------------------------------------2nd IL--------------------------------------------------------------
+
+
+outer = 2
+inner = 4
+SIZE = 6
+
+Before:
+bubble[] {6, 24, 86, 95, 60, 50}
+                 ^       ^
+		         Outer   Inner
+		 
+86 is larger than 60 so swap them
+
+After:
+bubble[] {6, 24, 60, 95, 86, 50}
+
+
+---------------------------------------------------3rd IL--------------------------------------------------------------
+
+
+outer = 2
+inner = 5
+SIZE = 6
+
+Before:
+bubble[] {6, 24, 60, 95, 86, 50}
+                 ^           ^
+		         Outer      Inner
+		 
+60 is larger than 50 so swap them
+
+After:
+bubble[] {6, 24, 50, 95, 86, 60}
+
+We can see after the last iteration of the inner loop that the third smallest value is in the index position of [2].
+
+
+-----------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------4th OL--------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+
+outer = 3
+
+
+---------------------------------------------------1st IL--------------------------------------------------------------
+
+
+outer = 3
+inner = 4
+SIZE = 6
+
+Before:
+bubble[] {6, 24, 50, 95, 86, 60}
+                     ^   ^
+		         Outer   Inner
+		
+95 is larger than 86 so swap them
+
+After:
+bubble[] {6, 24, 50, 86, 95, 60}
+
+
+---------------------------------------------------2nd IL--------------------------------------------------------------
+
+
+outer = 3
+inner = 5
+SIZE = 6
+
+Before:
+bubble[] {6, 24, 50, 86, 95, 60}
+                     ^       ^
+		             Outer   Inner
+		 
+86 is larger than 60 so swap them
+
+After:
+bubble[] {6, 24, 50, 60, 95, 86}
+
+We can see after the last iteration of the inner loop that the fourth smallest value is in the index position of [3].
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------5th OL--------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+
+outer = 4
+
+
+---------------------------------------------------1st IL--------------------------------------------------------------
+
+
+outer = 4
+inner = 5
+SIZE = 6
+
+Before:
+bubble[] {6, 24, 50, 60, 95, 86}
+                         ^   ^
+		             Outer   Inner
+		
+95 is larger than 86 so swap them
+
+After:
+bubble[] {6, 24, 50, 60, 86, 95}
+
+Finally our array is completely sorted. See that wasn't so hard.
+

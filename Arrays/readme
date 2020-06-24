@@ -1,0 +1,356 @@
+/*********************************************************************************************************************/
+													Arrays
+/*********************************************************************************************************************/
+
+Quick Persoanl Blurb (Feel Free To Skip)
+
+For the longest time I could not wrap my head around the idea of arrays. I was ok working with 1 dimensional arrays
+as long as I had an example to work from. It has taken me a very long time to finally feel like I have a solid grasp
+on the matter. I created this document and the example C programs to explain this topic (hopefully in a way anyone 
+can understand and pretty in-depth). It is my hope that people who are really struggling with this concept find this 
+page and are finally able to understand. If I have made any mistakes or something still isn't explained clearly enough 
+please let me know so I can fix it for others. Thanks
+
+
+
+
+What is an array.
+
+Most of the books and online resources I have read start off by saying something like: arrays are a data structure 
+which stores elements of the same type or are used to store a collection of data. Personally, it took a long time
+to really understand what this meant. I find relating hard concepts like this to something simple helps me under-
+stand it better. So...We are going to learn about 1-4 Dimensional Array's with Grandma's favorite game: BINGO!!!
+
+
+*** With a little modification to the code you can actually play a game of BINGO by the end of this. Consider it a 
+little challenge for yourself once youv'e read this. 
+
+
+/*********************************************************************************************************************/
+												   1D Array
+/*********************************************************************************************************************/
+
+
+*** Refer to bingo.c while reading this section ***
+
+
+
+If you didn't already know BINGO only uses the numbers 1-75. For each letter a range of numbers are used:
+B = 1 - 15
+I = 16 - 30
+N = 31 - 45
+G = 41 - 60
+O = 61 - 75
+
+So if we wanted to play a game on our computer we would need a program that will randomly pick a number for us. We could 
+build a simple program that randomly draws a number and then asks if you would like to draw another number. But, what if
+we wanted to randomly pick all 75 numbers when the program starts? Well we could do this by declaring 75 integer variables
+like so:
+
+int ball1 = rand();
+int ball2 = rand();
+int ball3 = rand();
+...
+...
+
+And then have equally as many printf() statements just to print them. But this would take a very long time not too mention 
+would add several lines of code to our program. So how can we do it? You guessed it, with an array. We know that all we 
+want to store are integer values. But, the other way makes us create 75 different variables just to do it. With an array
+we can use one variable name to refer to all the numbers. 
+
+But, if we are using the same variable name for all of these numbers how do we access them? That is where indexing comes 
+in. Think about a book (specifically a reference or textbook). Every book has a title (variable name) and a table of 
+contents (index) that lets you know where certain information is located in the book (values). I'll explain exactly 
+how this works a little later.     
+
+Figuring out what type of data you want to store is really the easy part when using arrays. If you want to store integers declare an int array, floats declare a float array, and chars a char array. Here are some examples of how to declare
+/ initialize char and int arrays:
+
+
+1. int numbers1[5]; 
+2. numbers1[] = {1, 2, 3, 4, 5};                    
+3. int numbers2[] = {5, 3, 22, 4, 99};  
+4. char array[5];
+5. char hello1[] = {'H', 'E', 'L', 'L', 'O', '\n'};
+6. char hello2[] = "HELLO";
+
+1. This declares an empty array named numbers1 that is able to store 5 integer values.
+2. This initializes the prviously declared numbers1 array by assigning 5 integer values in it.
+3. This initializes an array named numbers2 and stores 5 integer vales in it. 
+4. This declares an empty array named array that is able to store 5 char values.
+5. This initializes an array named hello1 that stores 6 character values.
+6. This initializes an array name hello2 that stores 5 character values.
+
+Just remember you are only allowed to store data of the same type in C arrays. 
+
+Now for the part that confused me for a long time but, is essential to working with arrays. ARRAYS ARE 0 BASED!!!
+What exactly does this mean? Well as humans we start counting from 1. Seriously, Homosapiens have been around
+an estimated 200,000 years but, the concept of 0 wasn't "invented" till around 5,000 years ago. No wonder arrays
+confuse people. Regardless when using arrays you start counting from 0. 
+
+Well if arrays are 0 based does that mean: int foo[5] actually stores 6 values? Simple answer, yes. However, 
+when the program is compiled the compiler adds a null character (i.e. \0) in the last spot of an array. 
+We can visualize this as:
+
+int array[5] = { 1, 2, 3, 4, 5, \0}; 
+                 ^  ^  ^  ^  ^   ^
+                 0  1  2  3  4   5
+
+You don't actually put the null character in the array when you initialize or use it. That is left and reserved for
+the compiler to do. If you think about it counting from 0 makes things easier. This design makes arrays easy to use 
+with for loops. 
+
+for( int x = 0; x < 75; x++){
+	bingonumbers[x] = rand() % 75;
+}
+
+We can all look at this for loop and understand that it will loop through 75 times. (We have already been using 
+zero based counting this whole time when using for loops!). It is the statement inside the for loop that tends to
+throw people off. 
+
+Well to tie back into the program we want to write for BINGO, we know that we want to randomly select all the numbers
+used in the game at once and store them somewhere in the order that they were drawn. We can randomly pick numbers
+with the rand() function. Remember the book reference? Well here is how it ties in.
+
+With the for loop we iterate from 0-74 which also happens to be the index numbers of our array. So the for loop 
+is used to set the index value of the array. So we could think of the statement inside the for loop as:
+
+bingonumbers[0] = rand() % 75;
+
+This is saying set the 0 index of array bingonumbers[] to the result of rand() % 75. And with every iteration
+of the for loop the value of x is increased by 1 which is used to point to the index of the array. With this 
+if we now wanted to see what the third number drawn was:
+
+printf("%d", bingonumbers[2]); //Again don't forget start counting from 0
+
+
+One last thing about 1 Dimensional arrays. It helps to think of this array as a row like in an Excel sheet.
+This will help you later when working with 2D arrays and beyond.
+
+
+*** Challenge ***
+This will require you to do a little research to figure out how to test if a value is already stored in an 
+array. bingo.c will randomly generate 75 numbers and store them in a 1D array. However, the source code in
+its current state doesn't check if a value has already been drawn (a number can only be used once in BINGO).
+Your challenge is to:
+* Find a way to check if a number has already been drawn
+* Add logic to have rand() generate a new number if the number is already in the array
+
+
+
+/*********************************************************************************************************************/
+													2D Array
+/*********************************************************************************************************************/
+
+
+*** Refer to bingo1.c while reading this section ***
+
+
+Ok so you finally have a grasp on 1D arrays. Let's see how 2D arrays work.
+
+bingo[5][5]; //Here we have declared an empty 2D array
+
+Earlier I told you that is was best to think of 1D arrays as a row of data in an Excel sheet. The second dimension
+should be thought of as the columns in an Excel sheet.
+
+array[5][5];
+      ^  ^
+    Row  Column
+	
+	
+Here is the array indexes displayed as a table and their index values. 
+
+		|	  0 	|	 1	  | 	2 	| 	3 	| 	4	  |	
+	---------------------------------------------
+	0 |  0,0  |  0,1  |  0,2  |  0,3  |  0,4  |
+	---------------------------------------------
+	1	|  1,0  |  1,1  |  1,2  |  1,3  |  1,4  |
+	---------------------------------------------
+	2	|  2,0  |  2,1  |  2,2  |  2,3  |  2,4  |
+	---------------------------------------------
+	3	|  3,0  |  3,1  |  3,2  |  3,3  |  3,4  |
+	---------------------------------------------
+	4	|  4,0  |  4,1  |  4,2  |  4,3  |  4,4  |
+	---------------------------------------------
+	
+The first dimension (1st square bracket) holds the row index. The second dimension (2nd square bracket) holds
+the column index. 
+
+If you compile and run the bingo1.c file you should see output that looks similar to this:
+
+	B	I	N	G	O
+	12  43  75  01  04
+	06  11  37  56  57
+	13  44  00  14  66
+	71  23  52  09  10
+	02  47  64  28  21
+
+Using the example BINGO card and the index table above it see if you can get the correct values:
+
+bingo[3][3] = ?;
+bingo[1][2] = ?;
+bingo[0][4] = ?;
+bingo[2][0] = ?;
+
+-----------------------------------------------------------------------------------------------------------------------
+
+If you got 09, 37, 04, and 13 you got it right. One thing you should realize right away is that as the number of 
+dimensions used in an array increases so does the number of for loops. You can see in bingo1.c that I used two for loops 
+to populate the array with random numbers. As we saw in the 1D section the value x was used to point to the index value
+of the "rows" index. But, now we also have a "columns" index value we have to work with. So after the inner for loop has
+completed all of it's iterations we will have filled indexes (0,0) (0,1) (0,2) (0,3) and (0,4). 
+
+Another thing to be aware of is how many "items" otherwise known as elements an array is able to hold. With 1D arrays 
+we can easily tell from the array declaration such as:
+
+array[50]; //This array can store 50 elements
+
+However, how many elements can our bingo[5][5] array store? 25. We get this by multiplying the first dimension
+by the second dimension (5 * 5 = 25). For any array bigger than 1 dimension simply multiply the dimensions together to
+see how many elements they can store.
+
+Lastly if 1D arrays should be thought of rows 2D arrays should be thought of as sheets in Excel. A point which will mean 
+more in the next few sections.
+
+*** Challenge ***
+In the previous section I pointed out that certain ranges of numbers belong to the B I N G O columns. However, this
+program just randomly selects numbers and places them into the array. Your challenge is to:
+* Ensure that only the correct range of values are stored in the  BINGO "columns" (i.e. only numbers between 1-15 are 
+  stored in indexes (0,0)(1,0)(2,0)(3,0)(4,0))
+* Ensure no value is used more than once	
+ 						
+
+/*********************************************************************************************************************/
+													3D Array
+/*********************************************************************************************************************/
+
+
+*** Refer to bingo2.c while reading this section ***
+
+
+Time to tackle 3D arrays. You really need to make sure you understand how 1D and 2D arrays work before reading this.
+Still here? Good for you, look at you mastering arrays. Well if 2D arrays can be thought of as Excel sheets then 3D
+arrays should be thought of as Excel workbooks that contain Excel sheets. We can also look at it from a BINGO game 
+standpoint. Has your Grandma ever only played one BINGO card??? Not likely. With a 3D array you could think of it as
+Grandma playing a game of BINGO with x amount of cards. Confused? Don't worry compile and run bingo2.c 
+and I will explain what I mean.
+
+
+	B	I	N	G	O
+	13	62	42	40	03
+	14	32	23	51	00
+	65	20	00	71	58
+	45	23	03	53	20
+	01	08	41	59	70
+
+	B	I	N	G	O
+	69	25	13	56	73
+	33	26	52	31	21
+	31	73	00	67	64
+	67	44	65	11	53
+	63	69	05	24	60
+	
+Something like this should have been printed out on your screen. The result of the program is that two BINGO cards 
+appear to have been created. To understand why let's look at the array declaration:
+
+bingo[2][5][5]; 
+
+If we were to read this out in plain english it would state: Create storage for two tables with 5 rows and 5 columns 
+per row. Which we see happened in the output. 
+
+
+Remember before I said to find out how many elements an array could store was found my multiplyiing the dimension 
+values together? 2 * 5 * 5 = 50. Well if we look at the print out we see two "tables" that have 25 elements each
+for a total of 50 elements all together. Cool hunh?
+
+*** Important to Note ***
+
+The order you put your dimensions is critical. Here are a few examples:
+
+array[5][5][2]; //5 Tables with 5 rows and 2 columns per row
+array[3][3][2]; //3 Tables with 3 rows and 2 columns per row
+array[2][2][3]; //2 Tables with 2 rows and 3 columns per row
+
+Just always remember that the last two dimensions in a 3D array and up are the row and column dimensions.
+
+*** Challenge ***
+Like the challenge for the 2D array make sure no number is used more than once per card.
+
+
+/*********************************************************************************************************************/
+													4D Array
+/*********************************************************************************************************************/
+
+
+*** Refer to bingo3.c while reading this section ***
+
+
+Finally, we have made it to 4D arrays!!! Your Grandma would be so proud. Back to the Excel example...if 3D arrays are
+sheets with tables then a 4D array is multiple workbooks with several sheets and tables in them. Got it? No, ok time to
+use BINGO again. Think of a 4D array as storing information on the number of games of BINGO your Grandma played in one
+night and the cards used for each game. Again, compile and run bingo3.c and see what I mean.
+
+	Grandma's Bingo Round #1
+
+	B	I	N	G	O
+	10	14	56	64	73
+	24	21	01	77	61
+	79	58	00	70	56
+	70	41	31	32	54
+	50	56	33	54	61
+
+	B	I	N	G	O
+	09	58	22	79	77
+	46	11	74	24	55
+	33	15	00	24	56
+	71	24	68	76	32
+	10	44	75	77	09
+
+	Grandma's Bingo Round #2
+
+	B	I	N	G	O
+	03	23	65	23	29
+	31	56	32	45	36
+	55	33	00	62	37
+	29	00	67	36	32
+	79	22	02	13	47
+
+	B	I	N	G	O
+	14	73	52	70	20
+	34	48	44	17	71
+	34	73	00	37	61
+	52	28	00	02	05
+	01	68	16	43	29
+
+	Grandma's Bingo Round #3
+
+	B	I	N	G	O
+	56	38	63	17	63
+	79	61	53	10	63
+	68	74	00	42	12
+	79	51	61	43	60
+	68	18	35	54	10
+
+	B	I	N	G	O
+	03	48	22	00	00
+	14	77	63	05	55
+	57	12	00	50	18
+	43	05	22	06	17
+	71	63	15	48	38
+	
+We declared the array:
+
+bingo[3][2][5][5];
+
+This is like saying store 3 games of BINGO in which Grandma played with 2 cards per round and the cards had 5 rows
+and 5 columns per row. Phew what a mouth full. But, hopefully you get the idea. Honestly, once you really understand
+the concept of 1D and 2D arrays the rest are easy to grasp. You just need to find a way to put it all into context
+(like using Excel or BINGO).
+
+*** Challenge ***
+Honestly if you made it this far and have completed all of the challenges up to this point you should have a program 
+capable of creating a BINGO game. Now the challenge is not to get beat too many times when you use this program to 
+play BINGO with your Grandma!!! 
+	
+	
+	
